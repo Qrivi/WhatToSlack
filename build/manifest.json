@@ -1,0 +1,42 @@
+{
+	"manifest_version": 2,
+	"name": "WhatSlack",
+	"author": "Kristof Dewilde <hello@kristofdewil.de>",
+	"description": "Forwards WhatsApp messages to Slack for your convenience.",
+	"version": "0.0.1",
+	"version_name": "0.0.1-20190309",
+	
+	"icons": {
+		"16": "logo/16.png",
+		"48": "logo/48.png",
+		"128": "logo/128.png"
+	},
+	
+	"background": {
+	   "scripts": [ "app/background.js" ],
+	   "persistent": true
+	},
+	
+	"options_ui": {
+        "page": "options/index.html",
+        "chrome_style": true
+    },
+	
+	"content_scripts": [{
+       "matches": ["https://web.whatsapp.com/"],
+       "js": ["app/WhatSlackCore.js", "app/WhatSlackLoader.js"]
+   }],
+	
+	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
+		"storage",
+		"https://web.whatsapp.com/*",
+		"https://slack.com/api/*"
+	],
+	
+	"web_accessible_resources": [
+		"app/WhatSlackListener.js",
+		"app/WhatSlackListener.css"
+	]
+}

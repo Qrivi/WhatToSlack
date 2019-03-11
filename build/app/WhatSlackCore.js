@@ -45,6 +45,7 @@ class WhatSlackCore {
             chrome.storage.local.set( { prefs: data ? data : this.prefs }, () => {
                 if( data )
                     this.prefs = data;
+                console.info( '[WhatSlackCore]       Saved:', { prefs: this.prefs } );
                 resolve( this.prefs );
             } );
         } );
@@ -68,6 +69,7 @@ class WhatSlackCore {
             chrome.storage.local.set( { forwards: data ? data : this.forwards }, () => {
                 if( data )
                     this.forwards = data;
+                console.info( '[WhatSlackCore]       Saved:', { forwards: this.forwards } );
                 resolve( this.forwards );
             } );
         } );
@@ -91,6 +93,7 @@ class WhatSlackCore {
             chrome.storage.local.set( { chats: data ? data : this.chats }, () => {
                 if( data )
                     this.chats = data;
+                console.info( '[WhatSlackCore]       Saved:', { chats: this.chats } );
                 resolve( this.chats );
             } );
         } );
@@ -114,6 +117,7 @@ class WhatSlackCore {
             chrome.storage.local.set( { contacts: data ? data : this.contacts }, () => {
                 if( data )
                     this.contacts = data;
+                console.info( '[WhatSlackCore]       Saved:', { contacts: this.contacts } );
                 resolve( this.contacts );
             } );
         } );

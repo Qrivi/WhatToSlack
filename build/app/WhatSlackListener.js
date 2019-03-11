@@ -77,7 +77,7 @@ class WhatSlackListener {
         return `+${id}`;
     }
     
-    updateContacts( id, name ) {
+    async updateContacts( id, name ) {
         const index = this.contacts.map( c => c.id ).indexOf( id );
 
         if( index === -1 )
@@ -85,17 +85,18 @@ class WhatSlackListener {
         else if( this.contacts[index].name !== name )
             this.contacts[ index ] = { id, name };
         else 
-            return;
+            throw new Error( 'Contact does not require an update' );
             
         window.postMessage( {
             action: 'SYNC_CONTACTS',
-            content: this.chats
+            content: this.contacts
         } );
+        
         console.info( `[WhatSlackListener] # ${id} is now known as ${name}` );
+        return true;
     }
 
-    updateChats() {
-        console.info( '[WhatSlackListener]   updateChats' );
+    async updateChats() {
         if( Store && Store.Msg && Store.Msg.models ) {
             Store.Msg.models.forEach( model => {
                 const index = this.chats.map( c => c.id ).indexOf( model.chat.id.user );
@@ -114,26 +115,26 @@ class WhatSlackListener {
                 action: 'SYNC_CHATS',
                 content: this.chats
             } );
-
-            console.log( '[WhatSlackListener] # Found chats:', { chats: this.chats } );
-        } else {
-            console.log( '[WhatSlackListener] # No chats (conversations) found' );
-        }
+            return true;
+        } 
+        throw new Error( 'No chats found' );
     }
 
-    updateForward( chatId, channelId ) {
-        console.info( '[WhatSlackListener]   updateForward', { chatId, channelId } );
+    async updateForward( chatId, channelId ) {
         const index = this.forwards.map( f => f.chatId ).indexOf( chatId );
 
         if( index === -1 )
             this.forwards.push( { chatId, channelId } );
-        else
+        else if( this.forwards[index].channelId !== channelId )
             this.forwards[ index ] = { chatId, channelId };
+        else 
+            throw new Error( 'Contact does not require an update' );
 
         window.postMessage( {
             action: 'SYNC_FORWARDS',
             content: this.forwards
         } );
+        return true;
     }
 }
 

@@ -145,17 +145,8 @@ class WhatSlackListener {
 
 ( () => {
     let listener;
-    let app = document.querySelector( '#app' );
-
-    // Add listener for info pane opening
-    app.addEventListener( 'click', ( e ) => {
-        const title = e.target.getAttribute( 'title' );
-        const isBackBtn = e.target.getAttribute( 'data-icon' ) === 'back-light';
-        if( isBackBtn || title === 'Group info' || title === 'Contact info' )
-            setTimeout( makePane, 10 );
-    } );
-
-    // Add listener for content scritp messages
+    
+    // Add listener for content script messages
     window.addEventListener( 'message', ( e ) => {
         if( e.source != window )
             return;
@@ -171,7 +162,7 @@ class WhatSlackListener {
             } );
 
     }, false );
-
+    
     window.handleSelect = ( select ) => {
         if( !select )
             return;
@@ -182,6 +173,8 @@ class WhatSlackListener {
         if( option )
             listener.updateForward( option.dataset.chatId, option.dataset.channelId );
     }
+    
+    document.querySelector( '#app' ).addEventListener( 'click', () => setTimeout( makePane, 10 ) );
 
     const makeStore = () => {
         console.info( '[WhatSlackListener]   makeStore' );
@@ -247,15 +240,15 @@ class WhatSlackListener {
     };
 
     const makePane = () => {
-        console.info( '[WhatSlackListener]   makePane' );
-
         if( document.querySelector( '.whtslck' ) )
             return; // because pane was already added to DOM.
 
         const sidebar = document.querySelector( '.three .copyable-area > div > div' );
-        const container = sidebar.querySelector( '.copyable-text' );
-        if( !listener || !container )
-            return; // because the sidebar is not open.    
+        const container = sidebar ? sidebar.querySelector( '.copyable-text' ) : false;
+        if( !container )
+            return; // because the sidebar is not open. 
+            
+        console.info( '[WhatSlackListener]   makePane' );   
 
         let chatName = container.innerHTML;
         if( container.querySelector( '.emoji' ) )

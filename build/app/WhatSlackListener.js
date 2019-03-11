@@ -10,9 +10,7 @@ class WhatSlackListener {
         console.info( '[WhatSlackListener]   start' );
         if( this.LISTENER_TOKEN )
             clearInterval( this.LISTENER_TOKEN );
-        // JavaScript this is the best this
-        this.LISTENER_TOKEN = setInterval( ( ( self ) => () => self.ping() )( this ), 10 );
-        // Don't @ me
+        this.LISTENER_TOKEN = setInterval( () => this.ping(), 10 );
     }
 
     ping() {

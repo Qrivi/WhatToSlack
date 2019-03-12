@@ -8,6 +8,7 @@ body {
         transform: translateY(-50px);
         opacity: 0;
     }
+
     100% {
         -webkit-transform: translateY(0);
         transform: translateY(0);
@@ -44,6 +45,7 @@ div.whtslck select {
     display: block;
     margin: 10px 0;
     cursor: pointer;
+    padding: 5px 15px;
 }
 
 div.whtslck button {
@@ -57,6 +59,6 @@ div.whtslck button {
     transition: opacity 250ms;
 }
 
-div.whtslck button:hover{
+div.whtslck button:hover {
     opacity: 1;
 }

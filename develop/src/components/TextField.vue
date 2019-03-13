@@ -1,24 +1,21 @@
 <template>
     <div>
-        <h3>{{ title }}</h3>
-        <input type="text" :placeholder="placeholder" v-model="value">
-        <span :class="feedback.type">{{ feedback.text }}</span>
+        <h3 v-if="title">{{ title }}</h3>
+        <input v-bind:value="value" v-on:input="$emit('input', $event.target.value)" :placeholder="placeholder">
+        <span :class="feedbackStatus">{{feedbackMessage}}</span>
     </div>
 </template>
 
 <script>
 export default {
-  name: 'InputText',
-  props: {
-    title: String,
-    placeholder: String,
-    value: String,
-    feedback: {
-        text: String,
-        type: String
-    },
-    validate: Function
-  }
+    name: 'TextField',
+    props: {
+        value: String,
+        title: String,
+        placeholder: String,
+        feedbackStatus: String,
+        feedbackMessage: String
+    }
 }
 </script>
 
@@ -30,7 +27,7 @@ h3 {
     color: inherit;
 }
 
-input {
+input { // overwrite Chrome style styles
     display: block;
     width: 100%;
     margin: 8px 0 4px !important;

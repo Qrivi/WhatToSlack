@@ -1,15 +1,20 @@
 <template>
   <div id="app">
     <ErrorMessage/>
-    <SectionSlack 
-        title="Slack Communication"
-        description="WhatSlack communicates securely and directly from within the WhatsApp Web tab with the Slack API. Nothing is sent over third-party services." />
-    <SectionForwards
-        title="Forwarding Setup"
-        description="Link WhatsApp chats to Slack channels below. Works with WhatsApp group chats as well. Because chat and channel names can be changed but IDs cannot, the latter are preferred." />
-    <SectionExtra
-        title="Extra"
-        description="You are using version <em>0.0.0</em>. This is currently the latest version."/>
+    
+    <section id="slack">
+        <h2>Slack Authentication</h2>
+        <p>
+            WhatSlack requires a registered Slack bot to post forwarded WhatsApp messages to your team's workspace. If you have not done so yet, you will need to create a Slack app, add a bot and provide its authentication token below. <a href="#">More info.</a>
+        </p>
+
+        <TextField 
+            title="Bot OAuth Access Token" 
+            placeholder="xoxb-..."
+            v-model="slackToken"
+            />
+    </section>
+    
     
     <footer>
 		<a href="https://github.com/Qrivi/WhatSlack">
@@ -23,22 +28,36 @@
 
 <script>
 import ErrorMessage from './components/ErrorMessage.vue'
-import SectionExtra from './components/SectionExtra.vue'
-import SectionForwards from './components/SectionForwards.vue'
-import SectionSlack from './components/SectionSlack.vue'
+import TextField from './components/TextField.vue'
 
 export default {
   name: 'app',
   components: {
-    ErrorMessage,
-    SectionExtra,
-    SectionForwards,
-    SectionSlack
+      ErrorMessage,
+      TextField
+  },
+  data() {
+      return {
+          slackToken: 'xoxb-ikbeneenslacktoken-echtwaar'
+      };
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+    footer {
+        display: block;
+        text-align: center;
+        margin: 15px 0 0;
+        padding: 5px 0 20px;
 
+        svg {
+            fill: #1c1c1c;
+            width: 25px;
+        }
 
+        a:hover svg {
+            fill: #34D366;
+        }
+    }
 </style>

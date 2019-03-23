@@ -1,5 +1,6 @@
-# Folder with personal development secrets
-/reference/
+# Generated production code
+/build/content
+/build/options
 
 # npm
 node_modules/
@@ -8,7 +9,6 @@ yarn-debug.log*
 yarn-error.log*
 /test/e2e/reports
 selenium-debug.log
-package-lock.json
 
 # Windows image file caches
 Thumbs.db

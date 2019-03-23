@@ -1,4 +1,4 @@
-class WhatSlackLoader {
+export default class WhatSlackLoader {
     constructor( core ) {
         this.core = core;
 
@@ -25,10 +25,10 @@ class WhatSlackLoader {
                 const l = document.createElement( 'link' );
                 l.rel = 'stylesheet';
                 l.type = 'text/css';
-                l.href = chrome.extension.getURL( 'app/WhatSlackListener.css' );
+                l.href = chrome.extension.getURL( 'content/inject.css' );
 
                 const s = document.createElement( 'script' );
-                s.src = chrome.extension.getURL( 'app/WhatSlackListener.js' );
+                s.src = chrome.extension.getURL( 'content/inject.js' );
                 s.onload = function() {
                     this.remove();
                 };
@@ -59,28 +59,3 @@ class WhatSlackLoader {
         this.core.saveContacts( contacts );
     }
 }
-
-(() => {
-    const loader = new WhatSlackLoader( new WhatSlackCore() );
-
-    window.addEventListener( 'message', ( e ) => {
-        if( e.source != window )
-            return;
-
-        if( e.data.action === 'HANDLE_EVENT' )
-            console.log( 'GOT EVENT', e.data.content );
-
-        if( e.data.action === 'SYNC_FORWARDS' )
-            loader.saveForwards( e.data.content );
-
-        if( e.data.action === 'SYNC_CHATS' )
-            loader.saveChats( e.data.content );
-            
-        if( e.data.action === 'SYNC_CONTACTS' )
-            loader.saveContacts( e.data.content );
-
-        if( e.data.action === 'OPEN_OPTIONS' )
-            chrome.runtime.sendMessage( { action: e.data.action } );
-
-    }, false );
-})();

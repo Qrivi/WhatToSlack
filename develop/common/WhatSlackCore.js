@@ -1,4 +1,4 @@
-class WhatSlackCore {
+export default class WhatSlackCore {
     constructor() {
         this.prefs = {};
         this.forwards = [];

@@ -5,7 +5,7 @@
     <section id="slack">
         <h2>Slack Authentication</h2>
         <p>
-            WhatSlack requires a registered Slack bot to post forwarded WhatsApp messages to your team's workspace. If you have not done so yet, you will need to create a Slack app, add a bot and provide its authentication token below. <a href="#">More info.</a>
+            WhatSlack requires a registered Slack bot to post forwarded WhatsApp messages to your team's workspace. If you have not done so yet, you will need to create a Slack app, add a bot and provide its authentication token below. <a href="https://github.com/Qrivi/">More info.</a>
         </p>
 
         <TextField 
@@ -40,6 +40,9 @@ export default {
       return {
           slackToken: 'xoxb-ikbeneenslacktoken-echtwaar'
       };
+  },
+  created() {
+      console.log('hello world'); // eslint-disable-line
   }
 }
 </script>

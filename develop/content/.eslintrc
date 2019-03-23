@@ -1,0 +1,51 @@
+---
+parser: 'babel-eslint'
+extends:
+  - 'eslint:recommended'
+env:
+  es6: true
+rules:
+  no-console: off
+  space-in-parens: error
+  indent:
+    - error
+    - 2
+  quotes:
+    - error
+    - single
+  semi:
+    - error
+    - always
+  prefer-const: error
+  quote-props:
+    - warn
+    - 'consistent-as-needed'
+  space-infix-ops: error
+  prefer-template: warn
+  no-array-constructor: warn
+  no-new-object: warn
+  no-var: error
+  eqeqeq:
+    - error
+    - smart
+  jsx-quotes:
+    - error
+    - 'prefer-single'
+  camelcase: warn
+  arrow-spacing: error
+  object-curly-spacing:
+    - error
+    - always
+  arrow-parens:
+    - warn
+    - 'as-needed'
+  key-spacing: error
+  comma-spacing:
+    - error
+    - before: false
+      after: true
+  comma-style:
+    - error
+    - last
+  no-undef: off # added for this project specifically
+  no-inner-declarations: off # added for this project specifically

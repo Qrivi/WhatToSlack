@@ -5,13 +5,16 @@
     "private": true,
     "author": "Kristof Dewilde <git@krivi.be>",
     "scripts": {
-        "build": "rollup -c && cp src/inject.css ../../build/content"
+        "build": "rollup -c && cp src/inject.css ../../build/content",
+        "lint": "eslint ."
     },
     "devDependencies": {
         "@babel/cli": "^7.2.3",
         "@babel/core": "^7.4.0",
         "@babel/preset-env": "^7.4.2",
+        "babel-eslint": "^10.0.1",
         "babel-preset-minify": "^0.5.0",
+        "eslint": "^5.15.3",
         "rollup": "^1.7.0",
         "rollup-plugin-babel": "^4.3.2"
     },

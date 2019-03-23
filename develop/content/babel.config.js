@@ -1,6 +1,6 @@
 module.exports = {
-    presets: [
-        "@babel/env",
-        "minify"
-    ]
+  presets: [
+    '@babel/env',
+    'minify'
+  ]
 };

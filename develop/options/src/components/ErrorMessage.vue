@@ -1,7 +1,7 @@
 <template>
-    <div>
-        Cannot connect to Slack's API with the provided OAuth token.
-    </div>
+  <div>
+    Cannot connect to Slack's API with the provided OAuth token.
+  </div>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ export default {
   props: {
     msg: String
   }
-}
+};
 </script>
 
 <style scoped>

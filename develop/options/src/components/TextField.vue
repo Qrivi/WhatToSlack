@@ -1,22 +1,28 @@
 <template>
-    <div>
-        <h3 v-if="title">{{ title }}</h3>
-        <input v-bind:value="value" v-on:input="$emit('input', $event.target.value)" :placeholder="placeholder">
-        <span :class="feedbackStatus">{{feedbackMessage}}</span>
-    </div>
+  <div>
+    <h3 v-if="title">
+      {{ title }}
+    </h3>
+    <input
+      :value="value"
+      :placeholder="placeholder"
+      @input="$emit('input', $event.target.value)"
+    >
+    <span :class="feedbackStatus">{{ feedbackMessage }}</span>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'TextField',
-    props: {
-        value: String,
-        title: String,
-        placeholder: String,
-        feedbackStatus: String,
-        feedbackMessage: String
-    }
-}
+  name: 'TextField',
+  props: {
+    value: String,
+    title: String,
+    placeholder: String,
+    feedbackStatus: String,
+    feedbackMessage: String
+  }
+};
 </script>
 
 <style scoped lang="scss">

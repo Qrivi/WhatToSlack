@@ -1,4 +1,4 @@
 module.exports = {
-    publicPath: './',
-    outputDir: '../../build/options',
-}
+  publicPath: './',
+  outputDir: '../../build/options',
+};

@@ -146,6 +146,8 @@ export default class WhatSlackCore {
         .then(data => {
           if(data.ok)
             resolve(data.channels.map(c => ({ id: c.id, name: c.name })));
+          else if(data.error === 'invalid_auth')
+            reject('Cannot connect to Slack: the provided OAuth token is invalid.');
           else
             reject(`Slack API returned an error: ${data.error}`);
         })

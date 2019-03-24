@@ -4,11 +4,12 @@
       {{ title }}
     </h3>
     <input
-      :value="value"
       :placeholder="placeholder"
-      @input="$emit('input', $event.target.value)"
+      :value="value"
+      :maxlength="maxlength"
+      @input="$emit('input', $event)"
     >
-    <span :class="feedbackStatus">{{ feedbackMessage }}</span>
+    <span :class="feedbackStatus">{{ feedbackMessage }}&nbsp;</span>
   </div>
 </template>
 
@@ -16,9 +17,10 @@
 export default {
   name: 'TextField',
   props: {
-    value: String,
     title: String,
     placeholder: String,
+    value: String,
+    maxlength: Number,
     feedbackStatus: String,
     feedbackMessage: String
   }
@@ -55,9 +57,17 @@ input { // overwrite Chrome style styles
 span {
     font-size: .9em;
     margin: 0 0 20px;
-    
+
+    &.ok {
+      color: #4F8A10;
+    }
+
+    &.warning {
+      color: #9F6000;
+    }
+
     &.error {
-        color: #ff3333;
+        color: #D8000C;
     }
 }
 </style>

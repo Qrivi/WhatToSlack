@@ -48,3 +48,4 @@ rules:
   comma-style:
     - error
     - last
+  vue/require-default-prop: off

@@ -1,4 +1,4 @@
-import WhatSlackCore from '../../common/WhatSlackCore';
+import WhatSlackCore from './common/WhatSlackCore';
 import WhatSlackLoader from './model/WhatSlackLoader';
 
 (() => {

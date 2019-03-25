@@ -79,6 +79,10 @@ export default class WhatSlackStub {
     });
   }
 
+  clearForwards() {
+    return this.saveForwards([]);
+  }
+
   fetchChats() {
     console.info('[WhatSlackStub]     fetchChats');
     return new Promise((resolve, reject) => {
@@ -105,6 +109,10 @@ export default class WhatSlackStub {
     });
   }
 
+  clearChats() {
+    return this.saveChats([]);
+  }
+
   fetchContacts() {
     console.info('[WhatSlackStub]     fetchContacts');
     return new Promise((resolve, reject) => {
@@ -129,6 +137,10 @@ export default class WhatSlackStub {
         reject(err);
       }
     });
+  }
+
+  clearContacts() {
+    return this.saveContacts([]);
   }
 
   fetchChannels() {

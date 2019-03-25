@@ -75,6 +75,10 @@ export default class WhatSlackCore {
     });
   }
 
+  clearForwards() {
+    return this.saveForwards([]);
+  }
+
   fetchChats() {
     console.info('[WhatSlackCore]     fetchChats');
     return new Promise((resolve, reject) => {
@@ -99,6 +103,10 @@ export default class WhatSlackCore {
     });
   }
 
+  clearChats() {
+    return this.saveChats([]);
+  }
+
   fetchContacts() {
     console.info('[WhatSlackCore]     fetchContacts');
     return new Promise((resolve, reject) => {
@@ -121,6 +129,10 @@ export default class WhatSlackCore {
         resolve(this.contacts);
       });
     });
+  }
+
+  clearContacts() {
+    return this.saveContacts([]);
   }
 
   fetchChannels() {

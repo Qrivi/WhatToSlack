@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 * {
     box-sizing: border-box;
     outline: none;

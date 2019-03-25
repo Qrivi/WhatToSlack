@@ -143,7 +143,7 @@ export default class WhatSlackCore {
     console.info('[WhatSlackCore]     fetchChannels');
     return new Promise((resolve, reject) => {
       if(!this.prefs.slackToken)
-        return resolve([]);
+        return reject('Cannot connect to Slack: no OAuth token was provided.');
 
       const url = 'https://slack.com/api/conversations.list';
       const params = Object.entries({
@@ -165,7 +165,7 @@ export default class WhatSlackCore {
           else if(data.error === 'invalid_auth')
             reject('Cannot connect to Slack: the provided OAuth token is invalid.');
           else
-            reject(`Slack API returned an error: ${data.error}`);
+            reject(`Slack API returned an error: ${data.error}.`);
         })
         .catch(err => reject(err));
     });

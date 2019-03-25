@@ -1,9 +1,7 @@
 export default class WhatSlackLoader {
   constructor(core) {
     this.core = core;
-
-    this.core.init()
-      .then(() => this.injectListener())
+    this.injectListener()
       .then(() => {
         window.postMessage({
           action: 'START_APP',
@@ -42,20 +40,5 @@ export default class WhatSlackLoader {
         reject(err);
       }
     });
-  }
-
-  saveForwards(forwards) {
-    console.info('[WhatSlackLoader]     saveForwards');
-    this.core.saveForwards(forwards);
-  }
-
-  saveChats(chats) {
-    console.info('[WhatSlackLoader]     saveChats');
-    this.core.saveChats(chats);
-  }
-
-  saveContacts(contacts) {
-    console.info('[WhatSlackLoader]     saveContacts');
-    this.core.saveContacts(contacts);
   }
 }

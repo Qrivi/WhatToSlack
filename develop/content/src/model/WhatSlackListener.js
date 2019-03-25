@@ -21,7 +21,7 @@ export default class WhatSlackListener {
 
           if(this.forwards.find(f => f.chatId === model.chat.id.user)) {
             window.postMessage({
-              action: 'HANDLE_EVENT',
+              action: 'HANDLE_MESSAGE',
               content: this.cleanModel(model)
             });
           }
@@ -70,6 +70,7 @@ export default class WhatSlackListener {
   }
 
   getContact(id){
+    // TODO add ws-photobook integration
     const contact = this.contacts.find(c => c.id === id);
 
     if(contact)

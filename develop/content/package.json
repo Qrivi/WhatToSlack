@@ -5,6 +5,7 @@
     "private": true,
     "author": "Kristof Dewilde <git@krivi.be>",
     "scripts": {
+        "dev": "watch \"npm run build\" src",
         "build": "rollup -c && cp src/inject.css ../../build/content",
         "lint": "eslint ."
     },
@@ -16,7 +17,8 @@
         "babel-preset-minify": "^0.5.0",
         "eslint": "^5.15.3",
         "rollup": "^1.7.0",
-        "rollup-plugin-babel": "^4.3.2"
+        "rollup-plugin-babel": "^4.3.2",
+        "watch": "^1.0.2"
     },
     "browserslist": [
         "last 3 Chrome versions"

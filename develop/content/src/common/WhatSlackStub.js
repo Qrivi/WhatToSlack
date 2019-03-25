@@ -15,10 +15,14 @@ export default class WhatSlackStub {
           this.prefs = { ...this.prefs, ...data };
           Promise.all([ this.fetchForwards(), this.fetchChats(), this.fetchContacts(), this.fetchChannels() ])
             .then(data => {
-              this.forwards = data[ 0 ];
-              this.chats = data[ 1 ];
-              this.contacts = data[ 2 ],
-              this.channels = data[ 3 ];
+              if(data[ 0 ])
+                this.forwards = data[ 0 ];
+              if(data[ 1 ])
+                this.chats = data[ 1 ];
+              if(data[ 2 ])
+                this.contacts = data[ 2 ];
+              if(data[ 3 ])
+                this.channels = data[ 3 ];
               resolve();
             })
             .catch(err => reject(err));

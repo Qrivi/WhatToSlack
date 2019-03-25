@@ -52,7 +52,7 @@ export default {
   created() {
     this.core = chrome.storage ? new WhatSlackCore() : new WhatSlackStub();
     this.core.fetchPrefs().then(prefs => {
-      if(prefs.slackToken){
+      if(prefs && prefs.slackToken){
         this.tokenValue = prefs.slackToken;
         this.validateToken();
       }

@@ -8,7 +8,7 @@ export default class WhatSlackCore {
   }
 
   init() {
-    console.info('[WhatSlackCore]     init');
+    console.info('[WhatSlackCore]       init');
     return new Promise((resolve, reject) => {
       this.fetchPrefs()
         .then(data => {
@@ -32,7 +32,7 @@ export default class WhatSlackCore {
   }
 
   fetchPrefs() {
-    console.info('[WhatSlackCore]     fetchPrefs');
+    console.info('[WhatSlackCore]       fetchPrefs');
     return new Promise((resolve, reject) => {
       chrome.storage.local.get([ 'prefs' ], data => {
         if(chrome.runtime.lastError)
@@ -44,19 +44,19 @@ export default class WhatSlackCore {
   }
 
   savePrefs(data) {
-    console.info('[WhatSlackCore]     savePrefs');
+    console.info('[WhatSlackCore]       savePrefs');
     return new Promise(resolve => {
       chrome.storage.local.set({ prefs: data ? data : this.prefs }, () => {
         if(data)
           this.prefs = data;
-        console.info('[WhatSlackCore]     Saved:', { prefs: this.prefs });
+        console.info('[WhatSlackCore]       Saved:', { prefs: this.prefs });
         resolve(this.prefs);
       });
     });
   }
 
   fetchForwards() {
-    console.info('[WhatSlackCore]     fetchForwards');
+    console.info('[WhatSlackCore]       fetchForwards');
     return new Promise((resolve, reject) => {
       chrome.storage.local.get([ 'forwards' ], data => {
         if(chrome.runtime.lastError)
@@ -68,12 +68,12 @@ export default class WhatSlackCore {
   }
 
   saveForwards(data) {
-    console.info('[WhatSlackCore]     saveForwards');
+    console.info('[WhatSlackCore]       saveForwards');
     return new Promise(resolve => {
       chrome.storage.local.set({ forwards: data ? data : this.forwards }, () => {
         if(data)
           this.forwards = data;
-        console.info('[WhatSlackCore]     Saved:', { forwards: this.forwards });
+        console.info('[WhatSlackCore]       Saved:', { forwards: this.forwards });
         resolve(this.forwards);
       });
     });
@@ -84,7 +84,7 @@ export default class WhatSlackCore {
   }
 
   fetchChats() {
-    console.info('[WhatSlackCore]     fetchChats');
+    console.info('[WhatSlackCore]       fetchChats');
     return new Promise((resolve, reject) => {
       chrome.storage.local.get([ 'chats' ], data => {
         if(chrome.runtime.lastError)
@@ -96,12 +96,12 @@ export default class WhatSlackCore {
   }
 
   saveChats(data) {
-    console.info('[WhatSlackCore]     saveChats');
+    console.info('[WhatSlackCore]       saveChats');
     return new Promise(resolve => {
       chrome.storage.local.set({ chats: data ? data : this.chats }, () => {
         if(data)
           this.chats = data;
-        console.info('[WhatSlackCore]     Saved:', { chats: this.chats });
+        console.info('[WhatSlackCore]       Saved:', { chats: this.chats });
         resolve(this.chats);
       });
     });
@@ -112,7 +112,7 @@ export default class WhatSlackCore {
   }
 
   fetchContacts() {
-    console.info('[WhatSlackCore]     fetchContacts');
+    console.info('[WhatSlackCore]       fetchContacts');
     return new Promise((resolve, reject) => {
       chrome.storage.local.get([ 'contacts' ], data => {
         if(chrome.runtime.lastError)
@@ -124,12 +124,12 @@ export default class WhatSlackCore {
   }
 
   saveContacts(data) {
-    console.info('[WhatSlackCore]     saveContacts');
+    console.info('[WhatSlackCore]       saveContacts');
     return new Promise(resolve => {
       chrome.storage.local.set({ contacts: data ? data : this.contacts }, () => {
         if(data)
           this.contacts = data;
-        console.info('[WhatSlackCore]     Saved:', { contacts: this.contacts });
+        console.info('[WhatSlackCore]       Saved:', { contacts: this.contacts });
         resolve(this.contacts);
       });
     });
@@ -140,7 +140,7 @@ export default class WhatSlackCore {
   }
 
   fetchChannels() {
-    console.info('[WhatSlackCore]     fetchChannels');
+    console.info('[WhatSlackCore]       fetchChannels');
     return new Promise((resolve, reject) => {
       if(!this.prefs.slackToken)
         return reject('Cannot connect to Slack: no OAuth token was provided.');

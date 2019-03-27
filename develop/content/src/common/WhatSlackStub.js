@@ -8,7 +8,7 @@ export default class WhatSlackStub {
   }
 
   init() {
-    console.info('[WhatSlackStub]     init');
+    console.info('[WhatSlackStub]       init');
     return new Promise((resolve, reject) => {
       this.fetchPrefs()
         .then(data => {
@@ -32,7 +32,7 @@ export default class WhatSlackStub {
   }
 
   fetchPrefs() {
-    console.info('[WhatSlackStub]     fetchPrefs');
+    console.info('[WhatSlackStub]       fetchPrefs');
     return new Promise((resolve, reject) => {
       try{
         resolve(JSON.parse(window.localStorage.getItem('prefs')));
@@ -43,13 +43,13 @@ export default class WhatSlackStub {
   }
 
   savePrefs(data) {
-    console.info('[WhatSlackStub]     savePrefs');
+    console.info('[WhatSlackStub]       savePrefs');
     return new Promise((resolve, reject) => {
       try{
         data = data ? data : this.prefs;
         window.localStorage.setItem('prefs', JSON.stringify(data));
         this.prefs = data;
-        console.info('[WhatSlackStub]     Saved:', { prefs: this.prefs });
+        console.info('[WhatSlackStub]       Saved:', { prefs: this.prefs });
         resolve(this.prefs);
       } catch(err){
         reject(err);
@@ -58,7 +58,7 @@ export default class WhatSlackStub {
   }
 
   fetchForwards() {
-    console.info('[WhatSlackStub]     fetchForwards');
+    console.info('[WhatSlackStub]       fetchForwards');
     return new Promise((resolve, reject) => {
       try{
         resolve(JSON.parse(window.localStorage.getItem('forwards')));
@@ -69,13 +69,13 @@ export default class WhatSlackStub {
   }
 
   saveForwards(data) {
-    console.info('[WhatSlackStub]     saveForwards');
+    console.info('[WhatSlackStub]       saveForwards');
     return new Promise((resolve, reject) => {
       try{
         data = data ? data : this.forwards;
         window.localStorage.setItem('forwards', JSON.stringify(data));
         this.forwards = data;
-        console.info('[WhatSlackStub]     Saved:', { forwards: this.forwards });
+        console.info('[WhatSlackStub]       Saved:', { forwards: this.forwards });
         resolve(this.forwards);
       } catch(err){
         reject(err);
@@ -88,7 +88,7 @@ export default class WhatSlackStub {
   }
 
   fetchChats() {
-    console.info('[WhatSlackStub]     fetchChats');
+    console.info('[WhatSlackStub]       fetchChats');
     return new Promise((resolve, reject) => {
       try{
         resolve(JSON.parse(window.localStorage.getItem('chats')));
@@ -99,13 +99,13 @@ export default class WhatSlackStub {
   }
 
   saveChats(data) {
-    console.info('[WhatSlackStub]     saveChats');
+    console.info('[WhatSlackStub]       saveChats');
     return new Promise((resolve, reject) => {
       try{
         data = data ? data : this.chats;
         window.localStorage.setItem('chats', JSON.stringify(data));
         this.chats = data;
-        console.info('[WhatSlackStub]     Saved:', { chats: this.chats });
+        console.info('[WhatSlackStub]       Saved:', { chats: this.chats });
         resolve(this.chats);
       } catch(err){
         reject(err);
@@ -118,7 +118,7 @@ export default class WhatSlackStub {
   }
 
   fetchContacts() {
-    console.info('[WhatSlackStub]     fetchContacts');
+    console.info('[WhatSlackStub]       fetchContacts');
     return new Promise((resolve, reject) => {
       try{
         resolve(JSON.parse(window.localStorage.getItem('contacts')));
@@ -129,13 +129,13 @@ export default class WhatSlackStub {
   }
 
   saveContacts(data) {
-    console.info('[WhatSlackStub]     saveContacts');
+    console.info('[WhatSlackStub]       saveContacts');
     return new Promise((resolve, reject) => {
       try{
         data = data ? data : this.contacts;
         window.localStorage.setItem('contacts', JSON.stringify(data));
         this.contacts = data;
-        console.info('[WhatSlackStub]     Saved:', { contacts: this.contacts });
+        console.info('[WhatSlackStub]       Saved:', { contacts: this.contacts });
         resolve(this.contacts);
       } catch(err){
         reject(err);
@@ -148,7 +148,7 @@ export default class WhatSlackStub {
   }
 
   fetchChannels() {
-    console.info('[WhatSlackStub]     fetchChannels');
+    console.info('[WhatSlackStub]       fetchChannels');
     return new Promise((resolve, reject) => {
       if(!this.prefs.slackToken)
         return resolve([]);

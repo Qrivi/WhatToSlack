@@ -18,11 +18,12 @@ export default class WhatSlackListener {
       Store.Msg.models.forEach(model => {
         if(model.isNewMsg) {
           model.isNewMsg = false;
+          const forward = this.forwards.find(f => f.chatId === model.chat.id.user);
 
-          if(this.forwards.find(f => f.chatId === model.chat.id.user)) {
+          if(forward) {
             window.postMessage({
               action: 'HANDLE_MESSAGE',
-              content: this.cleanModel(model)
+              content: { ...this.cleanModel(model), ...forward }
             });
           }
         }
@@ -30,43 +31,39 @@ export default class WhatSlackListener {
   }
 
   cleanModel(model) {
-    let event = { type: 'unknown' };
-    console.log('CLEANING A MODEL', model);
-
     if(model.senderObj)
       this.updateContacts(model.senderObj.id.user, model.senderObj.displayName);
 
-    if(model.text){
-      event = {
+    if(model.text)
+      return {
         type: 'message',
         from: this.getContact(model.senderObj.id.user),
         message: model.text
       };
-    }else if(model.eventType === 'i' && model.subtype === 'add'){
-      event = {
+    if(model.eventType === 'i' && model.subtype === 'add')
+      return {
         type: 'user added', // by someone else in the group
         who: model.recipients.map(r => this.getContact(r.user)),
         by: this.getContact(model.senderObj.id.user)
       };
-    }else if(model.eventType === 'i' && model.subtype === 'invite'){
-      event = {
+    if(model.eventType === 'i' && model.subtype === 'invite')
+      return {
         type: 'user joined', // by invitation link
         who: model.recipients.map(r => this.getContact(r.user))
       };
-    }else if(model.eventType === 'i' && model.subtype === 'remove'){
-      event = {
+    if(model.eventType === 'i' && model.subtype === 'remove')
+      return {
         type: 'user removed', // by someone else in the group
         who: model.recipients.map(r => this.getContact(r.user)),
         by: this.getContact(model.senderObj.id.user)
       };
-    }else if(model.eventType === 'i' && model.subtype === 'leave'){
-      event = {
+    if(model.eventType === 'i' && model.subtype === 'leave')
+      return {
         type: 'user left', // removed theirselves from the group
         who: model.recipients.map(r => this.getContact(r.user))
       };
-    }
 
-    return event;
+    return { type: 'unknown' };
   }
 
   getContact(id){
@@ -86,7 +83,7 @@ export default class WhatSlackListener {
     else if(this.contacts[index].name !== name)
       this.contacts[ index ] = { id, name };
     else
-      throw new Error('Contact does not require an update');
+      return false;
 
     window.postMessage({
       action: 'SYNC_CONTACTS',
@@ -129,7 +126,7 @@ export default class WhatSlackListener {
     else if(this.forwards[index].channelId !== channelId)
       this.forwards[ index ] = { chatId, channelId };
     else
-      throw new Error('Contact does not require an update');
+      return false;
 
     window.postMessage({
       action: 'SYNC_FORWARDS',

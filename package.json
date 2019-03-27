@@ -7,6 +7,7 @@
     "scripts": {
         "setup-content": "cd develop/content && npm install && npm run build && cd ../../",
         "setup-options": "cd develop/options && npm install && npm run build && cd ../../",
-        "setup": "npm run setup-content && npm run setup-options"
+        "setup": "npm run setup-content && npm run setup-options",
+        "postinstall": "npm run setup"
     }
 }

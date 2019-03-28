@@ -156,7 +156,7 @@ export default class WhatSlackCore {
       headers.append('Authorization', `Bearer ${this.prefs.slackToken}`);
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-      fetch(new Request(`${url}?${params}`, { method: 'GET', headers }))
+      fetch(`${url}?${params}`, { method: 'GET', headers })
         .then(response => response.json())
         .then(data => {
           if(data.ok)

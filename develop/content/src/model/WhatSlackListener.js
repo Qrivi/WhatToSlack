@@ -37,8 +37,9 @@ export default class WhatSlackListener {
     if(model.text)
       return {
         type: 'message',
+        fromId: model.senderObj.id.user,
         from: this.getContact(model.senderObj.id.user),
-        message: model.text
+        message: this.parseMentions(model.text)
       };
     if(model.eventType === 'i' && model.subtype === 'add')
       return {
@@ -67,12 +68,15 @@ export default class WhatSlackListener {
   }
 
   getContact(id){
-    // TODO add ws-photobook integration
     const contact = this.contacts.find(c => c.id === id);
 
     if(contact)
       return contact.name;
     return `+${id}`;
+  }
+
+  parseMentions(message){
+    return message.replace(/@\d{1,15}/, m => this.getContact(m.substr(1)));
   }
 
   async updateContacts(id, name) {

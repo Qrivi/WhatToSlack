@@ -34,6 +34,8 @@ export default class WhatSlackRelay {
 
   async handleMessage(model){
     console.info('[WhatSlackRelay]      handleMessage');
+    // TODO add ws-photobook integration
+
     try{
       switch (model.type) {
       case 'message':

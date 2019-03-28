@@ -14,18 +14,20 @@ export default class WhatSlackRelay {
   };
 
   QUOTE_ADD = [
-    'Yay! Welcome!',
+    'Yay! Welcome! :tada:',
     'Great — even more spam now... Just kidding! :smile:',
     'Open WhatsApp and say hi, guys!',
     'Can\'t wait for the extra messages to process!',
-    'Welcome! Your hair looks great, by the way!'
+    'Welcome! Your hair looks great today!',
+    'This group just got a little more handsome. :grin:'
   ];
   QUOTE_REMOVE = [
     'Awww. I really liked processing their messages. :cry:',
     'If this goes on I\'ll be without a job soon! :cold_sweat',
     'Good riddance! :smiling_imp:',
-    'Bye bye!',
-    'Adios and vamos a la playa! (my developer is still working on my Spanish module)'
+    'Bye bye! :wave:',
+    'This is so sad. Alexa, play Despacito.',
+    'Press *F* to Pay Respects.' // Thank you, Stijn, for your contribution.
   ];
 
   constructor(prefs){

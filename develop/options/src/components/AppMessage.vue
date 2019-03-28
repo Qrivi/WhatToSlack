@@ -25,34 +25,23 @@ div {
     border: solid 1px #AF853B;
     background: #FCF0BA;
     box-shadow: 0 0 0 15px #FFF;
+    overflow: hidden;
 }
 
-.slide-enter-to {
-  animation: slide-in .33s;
-}
-.slide-leave-to {
-  animation: slide-in .33s reverse;
+.slide-enter-active, .slide-leave-active {
+  transition-duration: .25s;
+  transition-timing-function: ease-in-out;
 }
 
-@keyframes slide-in {
-  0% {
-    height: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    opacity: 0;
-  }
-  33% {
-    opacity: 0
-  }
-  100% {
-    height: 52px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    opacity: 1;
-  }
+.slide-enter-to, .slide-leave {
+  transform: scaleY(100%) translateY(0);
+  height: auto;
+  transform-origin: 50% 0;
+}
+
+.slide-enter, .slide-leave-to {
+  transform: scaleY(0) translateY(-100px);
+  height: 0;
+  transform-origin: 50% 0;
 }
 </style>

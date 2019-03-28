@@ -45,7 +45,6 @@ input { // overwrite Chrome style styles
     border-radius: 3px !important;
     color: inherit !important;
     background: #fff;
-    outline: solid 1px #616061 !important;
     outline: none !important;
     transition: box-shadow .1s !important;
 

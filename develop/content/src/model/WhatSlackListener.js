@@ -42,24 +42,24 @@ export default class WhatSlackListener {
       };
     if(model.eventType === 'i' && model.subtype === 'add')
       return {
-        type: 'user added', // by someone else in the group
+        type: 'user_added', // by someone else in the group
         who: model.recipients.map(r => this.getContact(r.user)),
         by: this.getContact(model.senderObj.id.user)
       };
     if(model.eventType === 'i' && model.subtype === 'invite')
       return {
-        type: 'user joined', // by invitation link
+        type: 'user_joined', // by invitation link
         who: model.recipients.map(r => this.getContact(r.user))
       };
     if(model.eventType === 'i' && model.subtype === 'remove')
       return {
-        type: 'user removed', // by someone else in the group
+        type: 'user_removed', // by someone else in the group
         who: model.recipients.map(r => this.getContact(r.user)),
         by: this.getContact(model.senderObj.id.user)
       };
     if(model.eventType === 'i' && model.subtype === 'leave')
       return {
-        type: 'user left', // removed theirselves from the group
+        type: 'user_left', // removed theirselves from the group
         who: model.recipients.map(r => this.getContact(r.user))
       };
 

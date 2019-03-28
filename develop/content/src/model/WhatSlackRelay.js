@@ -2,25 +2,25 @@ export default class WhatSlackRelay {
   EP_POSTMESSAGE = {
     url: 'https://slack.com/api/chat.postMessage',
     type: 'application/json; charset=utf-8',
-    parser: JSON.stringify,
-    template: {
-      icon_emoji: ':robot_face:', // eslint-disable-line
-      username: 'WhatsApp user'
-    }
+    parser: JSON.stringify
+    // template: {
+    //   icon_emoji: ':robot_face:', // eslint-disable-line
+    //   username: 'WhatsApp user'
+    // }
   };
   EP_UPLOADFILE = {
     url: 'https://slack.com/api/files.upload',
     type: 'multipart/form-data'
   };
 
-  MSG_ADD = [
+  QUOTE_ADD = [
     'Yay! Welcome!',
     'Great — even more spam now... Just kidding! :smile:',
     'Open WhatsApp and say hi, guys!',
     'Can\'t wait for the extra messages to process!',
     'Welcome! Your hair looks great, by the way!'
   ];
-  MSG_REMOVE = [
+  QUOTE_REMOVE = [
     'Awww. I really liked processing their messages. :cry:',
     'If this goes on I\'ll be without a job soon! :cold_sweat',
     'Good riddance! :smiling_imp:',
@@ -34,7 +34,6 @@ export default class WhatSlackRelay {
 
   async handleMessage(model){
     console.info('[WhatSlackRelay]      handleMessage');
-    // TODO add ws-photobook integration
 
     try{
       switch (model.type) {
@@ -42,51 +41,57 @@ export default class WhatSlackRelay {
         return await this.postRequest(this.EP_POSTMESSAGE, {
           channel: model.channelId,
           text: model.message,
-          username: model.from
+          username: model.from,
+          icon_emoji: ':robot_face:' // eslint-disable-line
+          // TODO add ws-photobook integration
         });
       case 'user_added':
         return await this.postRequest(this.EP_POSTMESSAGE, {
           channel: model.channelId,
-          attachments: {
+          username: 'WhatSlack Stacy',
+          attachments: [{
             mrkdwn_in: ['text', 'pretext'], // eslint-disable-line
             color: '#299389',
             pretext: this.getQuote('ADD'),
             text: `*${model.by}* added *${model.who}* to the group.`,
             fallback: `${model.by} added ${model.who} to the group.`,
-          }
+          }]
         });
       case 'user_joined':
         return await this.postRequest(this.EP_POSTMESSAGE, {
           channel: model.channelId,
-          attachments: {
+          username: 'WhatSlack Stacy',
+          attachments: [{
             mrkdwn_in: ['text', 'pretext'], // eslint-disable-line
             color: '#299389',
             pretext: this.getQuote('ADD'),
             text: `*${model.who}* joined the group.`,
             fallback: `${model.who} joined the group.`,
-          }
+          }]
         });
       case 'user_removed':
         return await this.postRequest(this.EP_POSTMESSAGE, {
           channel: model.channelId,
-          attachments: {
+          username: 'WhatSlack Stacy',
+          attachments: [{
             mrkdwn_in: ['text', 'pretext'], // eslint-disable-line
             color: 'warning',
             pretext: this.getQuote('REMOVE'),
             text: `*${model.by}* removed *${model.who}* from the group.`,
             fallback: `${model.by} removed ${model.who} from the group.`,
-          }
+          }]
         });
       case 'user_left':
         return await this.postRequest(this.EP_POSTMESSAGE, {
           channel: model.channelId,
-          attachments: {
+          username: 'WhatSlack Stacy',
+          attachments: [{
             mrkdwn_in: ['text', 'pretext'], // eslint-disable-line
             color: 'warning',
             pretext: this.getQuote('REMOVE'),
             text: `*${model.who}* left the group.`,
             fallback: `${model.who} left the group.`,
-          }
+          }]
         });
       }
     }catch(err){

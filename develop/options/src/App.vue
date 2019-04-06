@@ -74,8 +74,8 @@ import debounce from 'debounce';
 import WhatSlackCore from '../../content/src/common/WhatSlackCore';
 import WhatSlackStub from '../../content/src/common/WhatSlackStub';
 
-import AppFooter from './components/AppFooter.vue';
-import AppMessage from './components/AppMessage.vue';
+import AppFooter from './parts/AppFooter.vue';
+import AppMessage from './parts/AppMessage.vue';
 import TextField from './components/TextField.vue';
 import TextSelect from './components/TextSelect.vue';
 
@@ -171,3 +171,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+section {
+    padding: 5px 0 20px;
+}
+</style>

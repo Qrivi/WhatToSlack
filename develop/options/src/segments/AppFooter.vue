@@ -15,19 +15,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    footer {
-        display: block;
-        text-align: center;
-        margin: 15px 0 0;
-        padding: 5px 0 20px;
+  footer {
+    display: block;
+    text-align: center;
+    margin: 15px 0 0;
+    padding: 5px 0 20px;
 
-        svg {
-            fill: #1c1c1c;
-            width: 25px;
-        }
 
-        a:hover svg {
-            fill: #34D366;
-        }
+section {
+    padding: 5px 0 20px;
+}
+
+    svg {
+        fill: #1c1c1c;
+        width: 25px;
     }
+
+    a:hover svg {
+        fill: #34D366;
+    }
+  }
 </style>

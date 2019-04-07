@@ -93,14 +93,11 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 100%;
   height: 62px;
-  margin: 8px 0 4px;
   padding: 10px 10px 10px 60px;
   background: #fff;
   border: solid 1px #616061;
   border-radius: 3px;
-  margin: 8px 0 4px !important;
   overflow: visible;
   cursor: pointer;
 

@@ -7,9 +7,9 @@
       :placeholder="placeholder"
       :value="value"
       :maxlength="maxlength"
-      @input="$emit('input', $event)"
+      @input="$emit('input', value)"
     >
-    <span :class="feedbackStatus">{{ feedbackMessage }}&nbsp;</span>
+    <span :class="feedbackType">{{ feedbackMessage }}&nbsp;</span>
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
     placeholder: String,
     value: String,
     maxlength: Number,
-    feedbackStatus: String,
+    feedbackType: String,
     feedbackMessage: String
   }
 };

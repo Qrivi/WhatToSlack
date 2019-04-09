@@ -6,13 +6,13 @@
     </p>
 
     <TextField
+      ref="inputToken"
       title="Bot OAuth Access Token"
       placeholder="xoxb-..."
-      :value="token"
       :maxlength="54"
       :feedback-type="feedbackType"
       :feedback-message="feedbackMessage"
-      @input="validateToken"
+      @value="validateToken"
     />
   </section>
 </template>
@@ -29,7 +29,6 @@ export default {
   },
   data() {
     return {
-      token: '',
       feedbackType: '',
       feedbackMessage: ''
     };
@@ -39,26 +38,26 @@ export default {
       this.feedbackType = type ? type : '';
       this.feedbackMessage = message ? message : '';
     },
+    setToken: function(token){
+      this.$refs.inputToken.input(token);
+    },
     validateToken: debounce(function(token) {
-      if(token)
-        this.token = token;
-
-      if(!this.token.length){
+      if(!token || !token.length){
         this.feedbackType = 'warning';
         this.feedbackMessage = 'Can\'t do much without token ¯\\_(ツ)_/¯';
         return;
       }
-      if(!/^[a-z]{4}-[0-9]{11}-[0-9]{12}-\w{24}$/.test(this.token)){
+      if(!/^[a-z]{4}-[0-9]{11}-[0-9]{12}-\w{24}$/.test(token)){
         this.feedbackType = 'error';
         this.feedbackMessage = 'This is not a valid Slack token';
         return;
       }
-      if(!this.token.startsWith('xoxb')){
+      if(!token.startsWith('xoxb')){
         this.feedbackType = 'error';
         this.feedbackMessage = 'This Slack token is not a bot token';
         return;
       }
-      this.$emit('gotToken', token);
+      this.$emit('validToken', token);
     }, 1000)
   }
 };

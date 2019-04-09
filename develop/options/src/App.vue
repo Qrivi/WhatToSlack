@@ -6,7 +6,7 @@
 
     <SectionAuthentication
       ref="sectionAuthentication"
-      @gotToken="verifyToken"
+      @validToken="verifyToken"
     />
 
     <SectionForwarding
@@ -43,7 +43,8 @@ export default {
   created() {
     this.core = chrome.storage ? new WhatSlackCore() : new WhatSlackStub();
     this.core.fetchPrefs().then(prefs => {
-      this.$refs.sectionAuthentication.validateToken(prefs && prefs.slackToken ? prefs.slackToken : '');
+      const token = prefs && prefs.slackToken ? prefs.slackToken : '';
+      this.$refs.sectionAuthentication.setToken(token);
     });
   },
   methods: {

@@ -4,10 +4,10 @@
       {{ title }}
     </h3>
     <input
+      v-model="value"
       :placeholder="placeholder"
-      :value="value"
       :maxlength="maxlength"
-      @input="$emit('input', value)"
+      @input="$emit('value', value)"
     >
     <span :class="feedbackType">{{ feedbackMessage }}&nbsp;</span>
   </div>
@@ -19,10 +19,20 @@ export default {
   props: {
     title: String,
     placeholder: String,
-    value: String,
     maxlength: Number,
     feedbackType: String,
     feedbackMessage: String
+  },
+  data() {
+    return {
+      value: ''
+    };
+  },
+  methods: {
+    input: function(value) {
+      this.value = value;
+      this.$emit('value', value);
+    }
   }
 };
 </script>

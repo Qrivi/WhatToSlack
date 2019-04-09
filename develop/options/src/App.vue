@@ -72,6 +72,7 @@ export default {
 
 <style scoped>
 section {
-  padding: 5px 0 15px;
+  padding: 5px 0 20px;
+  border-bottom: solid 1px #ccc;
 }
 </style>

@@ -155,13 +155,13 @@ export default class WhatSlackStub {
 
       const url = 'https://slack.com/api/conversations.list';
       const params = Object.entries({
+        token: this.prefs.slackToken,
         exclude_archived: true, // eslint-disable-line
         limit: 1000,
         types: 'private_channel,public_channel'
       }).map(e => `${e[0]}=${encodeURIComponent(e[1])}`).join('&');
 
       const headers = new Headers();
-      headers.append('Authorization', `Bearer ${this.prefs.slackToken}`);
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
       fetch(`${url}?${params}`, { method: 'GET', headers })

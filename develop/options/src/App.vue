@@ -11,6 +11,9 @@
 
     <SectionForwarding
       ref="sectionForwarding"
+      :chats="chats"
+      :channels="channels"
+      :forwards="forwards"
     />
 
     <AppFooter />
@@ -37,14 +40,28 @@ export default {
   data() {
     return {
       core: null,
-      status: ''
+      status: '',
+      chats: [],
+      channels: [],
+      forwards: []
     };
   },
   created() {
     this.core = chrome.storage ? new WhatSlackCore() : new WhatSlackStub();
+
     this.core.fetchPrefs().then(prefs => {
       const token = prefs && prefs.slackToken ? prefs.slackToken : '';
       this.$refs.sectionAuthentication.setToken(token);
+    });
+
+    this.core.fetchForwards().then(forwards => {
+      if(forwards)
+        this.forwards = forwards;
+    });
+
+    this.core.fetchChats().then(chats => {
+      if(chats)
+        this.chats = chats;
     });
   },
   methods: {
@@ -52,15 +69,14 @@ export default {
       this.core.savePrefs({ slackToken: token })
         .then(() => {
           this.core.fetchChannels()
-            .then(() => {
+            .then(channels => {
               this.status = '';
               this.$refs.sectionAuthentication.setFeedback('ok', 'Token looks great — thanks!');
+              this.channels = channels;
             })
             .catch(err =>  {
               if(err.toString().endsWith('Failed to fetch'))
-                err = chrome.storage
-                  ? 'Could not verify token. This is not OK — you should check with a developer.'
-                  : 'Fetch failed. If this happened because of CORS on localhost, this is normal.';
+                err = 'Could not verify token. This is not OK — you should check with a developer.';
               this.status = err.toString();
               this.$refs.sectionAuthentication.setFeedback('warning', 'Token is well formatted but seems to be invalid');
             });

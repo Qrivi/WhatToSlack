@@ -1,5 +1,5 @@
 <template>
-  <article :class="{ removable, status }">
+  <article>
     <TextSelect
       icon="whatsapp"
       placeholder="Filter chats"
@@ -11,7 +11,7 @@
     <TextSelect
       icon="slack"
       placeholder="Filter channels"
-      :selected-item="cormattedChannel"
+      :selected-item="formattedChannel"
       :suggested-items="formattedChannels"
       @select="(item) => changeChannel(item)"
     />

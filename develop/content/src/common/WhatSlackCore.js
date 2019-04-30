@@ -10,24 +10,32 @@ export default class WhatSlackCore {
   init() {
     console.info('[WhatSlackCore]       init');
     return new Promise((resolve, reject) => {
-      this.fetchPrefs()
+      let error;
+      Promise.all([ this.fetchPrefs(), this.fetchForwards(), this.fetchChats(), this.fetchContacts() ])
         .then(data => {
-          this.prefs = { ...this.prefs, ...data };
-          Promise.all([ this.fetchForwards(), this.fetchChats(), this.fetchContacts(), this.fetchChannels() ])
-            .then(data => {
-              if(data[ 0 ])
-                this.forwards = data[ 0 ];
-              if(data[ 1 ])
-                this.chats = data[ 1 ];
-              if(data[ 2 ])
-                this.contacts = data[ 2 ];
-              if(data[ 3 ])
-                this.channels = data[ 3 ];
-              resolve();
-            })
-            .catch(err => reject(err));
+          this.prefs = { ...this.prefs, ...data[0] };
+          this.forwards = data[ 1 ];
+          this.chats = data[ 2 ];
+          this.contacts = data[ 3 ];
         })
-        .catch(err => reject(err));
+        .catch(err => {
+          error = err;
+        })
+        .finally(() => {
+          this.fetchChannels()
+            .then(data => {
+              this.channels = data;
+            })
+            .catch(err => {
+              error = err;
+            })
+            .finally(() => {
+              if(error)
+                reject(error);
+              else
+                resolve();
+            });
+        });
     });
   }
 
@@ -38,7 +46,7 @@ export default class WhatSlackCore {
         if(chrome.runtime.lastError)
           reject(chrome.runtime.lastError.message);
         else
-          resolve(data.prefs);
+          resolve(data.prefs ? data.prefs : {});
       });
     });
   }
@@ -62,7 +70,7 @@ export default class WhatSlackCore {
         if(chrome.runtime.lastError)
           reject(chrome.runtime.lastError.message);
         else
-          resolve(data.forwards);
+          resolve(data.forwards ? this.forwards : []);
       });
     });
   }
@@ -90,7 +98,7 @@ export default class WhatSlackCore {
         if(chrome.runtime.lastError)
           reject(chrome.runtime.lastError.message);
         else
-          resolve(data.chats);
+          resolve(data.chats ? data.chats : []);
       });
     });
   }
@@ -118,7 +126,7 @@ export default class WhatSlackCore {
         if(chrome.runtime.lastError)
           reject(chrome.runtime.lastError.message);
         else
-          resolve(data.contacts);
+          resolve(data.contacts ? data.contacts : []);
       });
     });
   }

@@ -10,24 +10,32 @@ export default class WhatSlackStub {
   init() {
     console.info('[WhatSlackStub]       init');
     return new Promise((resolve, reject) => {
-      this.fetchPrefs()
+      let error;
+      Promise.all([ this.fetchPrefs(), this.fetchForwards(), this.fetchChats(), this.fetchContacts() ])
         .then(data => {
-          this.prefs = { ...this.prefs, ...data };
-          Promise.all([ this.fetchForwards(), this.fetchChats(), this.fetchContacts(), this.fetchChannels() ])
-            .then(data => {
-              if(data[ 0 ])
-                this.forwards = data[ 0 ];
-              if(data[ 1 ])
-                this.chats = data[ 1 ];
-              if(data[ 2 ])
-                this.contacts = data[ 2 ];
-              if(data[ 3 ])
-                this.channels = data[ 3 ];
-              resolve();
-            })
-            .catch(err => reject(err));
+          this.prefs = { ...this.prefs, ...data[0] };
+          this.forwards = data[ 1 ];
+          this.chats = data[ 2 ];
+          this.contacts = data[ 3 ];
         })
-        .catch(err => reject(err));
+        .catch(err => {
+          error = err;
+        })
+        .finally(() => {
+          this.fetchChannels()
+            .then(data => {
+              this.channels = data;
+            })
+            .catch(err => {
+              error = err;
+            })
+            .finally(() => {
+              if(error)
+                reject(error);
+              else
+                resolve();
+            });
+        });
     });
   }
 
@@ -35,7 +43,8 @@ export default class WhatSlackStub {
     console.info('[WhatSlackStub]       fetchPrefs');
     return new Promise((resolve, reject) => {
       try{
-        resolve(JSON.parse(window.localStorage.getItem('prefs')));
+        const data = JSON.parse(window.localStorage.getItem('prefs'));
+        resolve(data ? data : {});
       } catch(err){
         reject(err);
       }
@@ -61,7 +70,8 @@ export default class WhatSlackStub {
     console.info('[WhatSlackStub]       fetchForwards');
     return new Promise((resolve, reject) => {
       try{
-        resolve(JSON.parse(window.localStorage.getItem('forwards')));
+        const data = JSON.parse(window.localStorage.getItem('forwards'));
+        resolve(data ? data : []);
       } catch(err){
         reject(err);
       }
@@ -91,7 +101,8 @@ export default class WhatSlackStub {
     console.info('[WhatSlackStub]       fetchChats');
     return new Promise((resolve, reject) => {
       try{
-        resolve(JSON.parse(window.localStorage.getItem('chats')));
+        const data = JSON.parse(window.localStorage.getItem('chats'));
+        resolve(data ? data : []);
       } catch(err){
         reject(err);
       }
@@ -121,7 +132,8 @@ export default class WhatSlackStub {
     console.info('[WhatSlackStub]       fetchContacts');
     return new Promise((resolve, reject) => {
       try{
-        resolve(JSON.parse(window.localStorage.getItem('contacts')));
+        const data = JSON.parse(window.localStorage.getItem('contacts'));
+        resolve(data ? data : []);
       } catch(err){
         reject(err);
       }

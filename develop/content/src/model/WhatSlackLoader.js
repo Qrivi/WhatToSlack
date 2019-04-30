@@ -13,7 +13,12 @@ export default class WhatSlackLoader {
           }
         });
       })
-      .catch(err => console.error('[WhatSlackLoader]    Whoopsies!', err)); // TODO show in popup
+      .catch(err => {
+        window.postMessage({
+          action: 'HANDLE_ERROR',
+          content: err
+        });
+      });
   }
 
   injectListener() {

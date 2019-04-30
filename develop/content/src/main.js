@@ -6,10 +6,19 @@ import WhatSlackRelay from './model/WhatSlackRelay';
   const core = new WhatSlackCore();
   let loader, relay;
 
-  core.init().then(() => {
-    loader = new WhatSlackLoader(core);
-    relay = new WhatSlackRelay(core.prefs);
-  });
+  const popup = error => {
+    console.log('Error message to be forwarded to popup:', error);
+    //chrome.runtime.sendMessage({ action: ?? });
+  };
+
+  core.init()
+    .then(() => {
+      loader = new WhatSlackLoader(core);
+      relay = new WhatSlackRelay(core.prefs);
+    })
+    .catch(err => {
+      popup(err);
+    });
 
   window.addEventListener('message', e => {
     if(!loader || !relay)
@@ -17,6 +26,9 @@ import WhatSlackRelay from './model/WhatSlackRelay';
 
     if(e.source !== window)
       return;
+
+    if(e.data.action === 'HANDLE_ERROR')
+      popup(e.data.content);
 
     if(e.data.action === 'HANDLE_MESSAGE')
       relay.handleMessage(e.data.content);

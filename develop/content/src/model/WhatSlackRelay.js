@@ -97,7 +97,10 @@ export default class WhatSlackRelay {
         });
       }
     }catch(err){
-      console.error('[WhatSlackRelay]     Whoopsies!', err); // TODO show in popup
+      window.postMessage({
+        action: 'HANDLE_ERROR',
+        content: err
+      });
     }
   }
 

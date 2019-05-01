@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
-    <div v-if="status">
-      {{ status }}
+    <div v-if="message">
+      {{ message }}
     </div>
   </transition>
 </template>
@@ -9,8 +9,15 @@
 <script>
 export default {
   name: 'AppMessage',
-  props: {
-    status: String
+  computed: {
+    message() {
+      switch(this.$store.getters.errors[0]) {
+      case 'AUTH':
+        return 'Verify your Slack authentication settings.';
+      default:
+        return false;
+      }
+    }
   }
 };
 </script>

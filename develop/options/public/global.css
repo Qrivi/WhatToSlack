@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700,900');
 
 ::-webkit-scrollbar {
   display: none;
@@ -50,4 +50,24 @@ a:hover {
 em {
   font-weight: 700;
   font-style: normal;
+}
+
+.button {
+  display: inline-block;
+  background: #007A5A;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  margin: 15px 0;
+  padding: 8px 14px 10px;
+  border-radius: 4px;
+  transition: box-shadow .1s ease-in-out;
+  cursor: pointer;
+}
+.button:hover {
+  text-decoration: none;
+  box-shadow: 0 1px 4px 0 #ddd;
+}
+.button:active {
+  box-shadow: 0 0 0 4px #C8E0F0;
 }

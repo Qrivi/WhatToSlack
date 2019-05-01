@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AppMessage :status="status" />
+    <AppMessage />
     <SectionAuthentication />
     <SectionForwarding />
     <AppFooter />
@@ -24,15 +24,9 @@ export default {
     SectionAuthentication,
     SectionForwarding
   },
-  data() {
-    return {
-      status: ''
-    };
-  },
   created() {
     const core = chrome.storage ? new WhatSlackCore() : new WhatSlackStub();
-    core.init(); // silently
-    this.$store.commit('setCore', core);
+    this.$store.commit('SET_CORE', core);
   }
 };
 </script>

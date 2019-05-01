@@ -9,10 +9,10 @@
       ref="inputToken"
       title="Bot OAuth Access Token"
       placeholder="xoxb-..."
-      :maxlength="54"
+      :max-length="54"
       :feedback-type="feedbackType"
       :feedback-message="feedbackMessage"
-      @value="validateToken"
+      @change="validateToken"
     />
   </section>
 </template>
@@ -33,15 +33,18 @@ export default {
       feedbackMessage: ''
     };
   },
+  created() {
+    const core = this.$store.getters.core;
+    core.fetchPrefs()
+      .then(data => {
+        core.prefs = { ...core.prefs, ...data };
+      })
+      .finally(() => {
+        this.$refs.inputToken.input(core.prefs.slackToken);
+      });
+  },
   methods: {
-    setFeedback: function(type, message) {
-      this.feedbackType = type ? type : '';
-      this.feedbackMessage = message ? message : '';
-    },
-    setToken: function(token){
-      this.$refs.inputToken.input(token);
-    },
-    validateToken: debounce(function(token) {
+    validateToken: debounce(async function(token) {
       if(!token || !token.length){
         this.feedbackType = 'warning';
         this.feedbackMessage = 'Can\'t do much without token ¯\\_(ツ)_/¯';
@@ -49,7 +52,7 @@ export default {
       }
       if(!/^[a-z]{4}-[0-9]{11}-[0-9]{12}-\w{24}$/.test(token)){
         this.feedbackType = 'error';
-        this.feedbackMessage = 'This is not a valid Slack token';
+        this.feedbackMessage = 'This is not a valid Slack token format';
         return;
       }
       if(!token.startsWith('xoxb')){
@@ -57,7 +60,17 @@ export default {
         this.feedbackMessage = 'This Slack token is not a bot token';
         return;
       }
-      this.$emit('validToken', token);
+
+      try {
+        const core = this.$store.getters.core;
+        await core.savePrefs({ ...core.prefs, ...{ slackToken: token } });
+        core.channels = await core.fetchChannels();
+        this.feedbackType = 'ok';
+        this.feedbackMessage = 'Token looks great — thanks!';
+      } catch (err) {
+        this.feedbackType = 'error';
+        this.feedbackMessage = err.toString();
+      }
     }, 1000)
   }
 };

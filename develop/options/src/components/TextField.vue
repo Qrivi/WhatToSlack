@@ -6,8 +6,8 @@
     <input
       v-model="value"
       :placeholder="placeholder"
-      :maxlength="maxlength"
-      @input="$emit('value', value)"
+      :maxlength="maxLength"
+      @input="$emit('change', value)"
     >
     <span :class="feedbackType">{{ feedbackMessage }}&nbsp;</span>
   </div>
@@ -19,7 +19,8 @@ export default {
   props: {
     title: String,
     placeholder: String,
-    maxlength: Number,
+    initialValue: String,
+    maxLength: Number,
     feedbackType: String,
     feedbackMessage: String
   },
@@ -28,10 +29,13 @@ export default {
       value: ''
     };
   },
+  created() {
+    this.value = this.initialValue;
+  },
   methods: {
     input: function(value) {
       this.value = value;
-      this.$emit('value', value);
+      this.$emit('change', value);
     }
   }
 };

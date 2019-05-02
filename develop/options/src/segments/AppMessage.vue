@@ -12,8 +12,8 @@ export default {
   computed: {
     message() {
       switch(this.$store.getters.errors[0]) {
-      case 'AUTH':
-        return 'Verify your Slack authentication settings.';
+      case 'SLACK_UNREACHABLE':
+        return 'WhatSlack is unable to connect to Slack. Please verify your bot token.';
       default:
         return false;
       }

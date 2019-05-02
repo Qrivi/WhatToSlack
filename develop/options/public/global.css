@@ -47,12 +47,7 @@ a:hover {
   text-decoration: underline;
 }
 
-em {
-  font-weight: 700;
-  font-style: normal;
-}
-
-.button {
+a.button {
   display: inline-block;
   background: #007A5A;
   color: #fff;
@@ -63,6 +58,7 @@ em {
   border-radius: 4px;
   transition: box-shadow .1s ease-in-out;
   cursor: pointer;
+  text-decoration: none;
 }
 .button:hover {
   text-decoration: none;

@@ -16,11 +16,8 @@
       @select="(item) => changeChannel(item)"
     />
 
-    <a
-      class="button"
-      @click="removeForward()"
-    >
-      <img src="../assets/icn_trash.png">
+    <a class="button" @click="removeForward()">
+      <img src="../assets/icons.svg">
     </a>
   </article>
 </template>

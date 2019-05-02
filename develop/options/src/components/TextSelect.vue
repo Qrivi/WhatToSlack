@@ -6,7 +6,7 @@
   >
     <img :src="require(`@/assets/icn_${icon}.png`)">
     <span>{{ selectedItem.name }}</span>
-    <span>{{ selectedItem.key }}</span>
+    <span>{{ selectedItem.id }}</span>
     <transition name="slide">
       <div
         v-if="showSuggestions"
@@ -23,11 +23,11 @@
         <ul>
           <li
             v-for="item in filteredItems"
-            :key="item.key"
+            :key="item.id"
             @click="$emit('select', item)"
           >
             <span>{{ item.name }}</span>
-            <span>{{ item.key }}</span>
+            <span>{{ item.id }}</span>
           </li>
         </ul>
       </div>
@@ -58,8 +58,8 @@ export default {
   computed: {
     filteredItems() {
       return this.suggestedItems
-        .filter(item => item.name.toLowerCase().includes(this.search.toLowerCase()) || item.key.toLowerCase().includes(this.search.toLowerCase()))
-        .sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.key > b.key) ? 1 : -1) : -1);
+        .filter(item => item.name.toLowerCase().includes(this.search.toLowerCase()) || item.id.toLowerCase().includes(this.search.toLowerCase()))
+        .sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.id > b.id) ? 1 : -1) : -1);
     }
   },
   mounted () {

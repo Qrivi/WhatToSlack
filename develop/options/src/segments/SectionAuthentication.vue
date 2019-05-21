@@ -9,6 +9,7 @@
       ref="inputToken"
       title="Bot OAuth Access Token"
       placeholder="xoxb-..."
+      :initial-value="slackToken"
       :max-length="54"
       :feedback-type="feedbackType"
       :feedback-message="feedbackMessage"
@@ -29,22 +30,33 @@ export default {
   },
   data() {
     return {
+      tokenLoaded: false,
       feedbackType: '',
       feedbackMessage: ''
     };
   },
-  created() {
-    const core = this.$store.getters.core;
-    core.fetchPrefs()
-      .then(data => {
-        core.prefs = { ...core.prefs, ...data };
-      })
-      .finally(() => {
-        this.$refs.inputToken.input(core.prefs.slackToken);
-      });
+  computed: {
+    slackToken() {
+      return this.$store.getters.slackToken;
+    }
+  },
+  mounted() {
+    this.$store.dispatch('SYNC_TOKEN');
+    this.$store.watch(
+      (state, getters) => getters.token,
+      value => {
+        if(/^xoxb-[0-9]{11}-[0-9]{12}-\w{24}$/.test(value))
+          this.$store.dispatch('FETCH_CHANNELS');
+        if(!this.tokenLoaded)
+          this.$refs.inputToken.input(value);
+      }
+    );
   },
   methods: {
     validateToken: debounce(async function(token) {
+      this.tokenLoaded = true;
+      this.$store.dispatch('SYNC_TOKEN', token);
+
       if(!token || !token.length){
         this.feedbackType = 'warning';
         this.feedbackMessage = 'Can\'t do much without token ¯\\_(ツ)_/¯';
@@ -60,17 +72,13 @@ export default {
         this.feedbackMessage = 'This Slack token is not a bot token';
         return;
       }
-
-      try {
-        const core = this.$store.getters.core;
-        await core.savePrefs({ ...core.prefs, ...{ slackToken: token } });
-        core.channels = await core.fetchChannels();
-        this.feedbackType = 'ok';
-        this.feedbackMessage = 'Token looks great — thanks!';
-      } catch (err) {
+      if(this.$store.getters.errors.channels){
         this.feedbackType = 'error';
-        this.feedbackMessage = err.toString();
+        this.feedbackMessage = 'This Slack token is not working';
+        return;
       }
+      this.feedbackType = 'ok';
+      this.feedbackMessage = 'Token looks great — thanks!';
     }, 1000)
   }
 };

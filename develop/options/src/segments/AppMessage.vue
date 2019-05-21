@@ -1,7 +1,9 @@
 <template>
   <transition name="slide">
-    <div v-if="message">
-      {{ message }}
+    <div v-if="messages.length">
+      <p v-for="(message, index) in messages" :key="`msg-${index}`">
+        {{ message }}
+      </p>
     </div>
   </transition>
 </template>
@@ -10,13 +12,14 @@
 export default {
   name: 'AppMessage',
   computed: {
-    message() {
-      switch(this.$store.getters.errors[0]) {
-      case 'SLACK_UNREACHABLE':
-        return 'WhatSlack is unable to connect to Slack. Please verify your bot token.';
-      default:
-        return false;
-      }
+    messages() {
+      const errors = this.$store.getters.errors;
+      const msgs = [];
+      Object.keys(errors).forEach(e => {
+        if(errors[e])
+          msgs.push(errors[e]);
+      });
+      return msgs;
     }
   }
 };

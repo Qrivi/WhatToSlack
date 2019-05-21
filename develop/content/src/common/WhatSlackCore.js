@@ -51,14 +51,12 @@ export default class WhatSlackCore {
     });
   }
 
-  savePrefs(data) {
-    console.info('[WhatSlackCore]       savePrefs');
+  persistPrefs(data) {
+    console.info('[WhatSlackCore]       persistPrefs');
     return new Promise(resolve => {
-      chrome.storage.local.set({ prefs: data ? data : this.prefs }, () => {
-        if(data)
-          this.prefs = data;
-        console.info('[WhatSlackCore]       Saved:', { prefs: this.prefs });
-        resolve(this.prefs);
+      chrome.storage.local.set({ prefs: data ? data : {} }, () => {
+        console.info('[WhatSlackCore]       Persisted:', { prefs: data });
+        resolve(data);
       });
     });
   }
@@ -70,25 +68,23 @@ export default class WhatSlackCore {
         if(chrome.runtime.lastError)
           reject(chrome.runtime.lastError.message);
         else
-          resolve(data.forwards ? this.forwards : []);
+          resolve(data.forwards ? data.forwards : []);
       });
     });
   }
 
-  saveForwards(data) {
-    console.info('[WhatSlackCore]       saveForwards');
+  persistForwards(data) {
+    console.info('[WhatSlackCore]       persistForwards');
     return new Promise(resolve => {
-      chrome.storage.local.set({ forwards: data ? data : this.forwards }, () => {
-        if(data)
-          this.forwards = data;
-        console.info('[WhatSlackCore]       Saved:', { forwards: this.forwards });
-        resolve(this.forwards);
+      chrome.storage.local.set({ forwards: data ? data : [] }, () => {
+        console.info('[WhatSlackCore]       Persisted:', { forwards: data });
+        resolve(data);
       });
     });
   }
 
   clearForwards() {
-    return this.saveForwards([]);
+    return this.persistForwards([]);
   }
 
   fetchChats() {
@@ -103,20 +99,18 @@ export default class WhatSlackCore {
     });
   }
 
-  saveChats(data) {
-    console.info('[WhatSlackCore]       saveChats');
+  persistChats(data) {
+    console.info('[WhatSlackCore]       persistChats');
     return new Promise(resolve => {
-      chrome.storage.local.set({ chats: data ? data : this.chats }, () => {
-        if(data)
-          this.chats = data;
-        console.info('[WhatSlackCore]       Saved:', { chats: this.chats });
-        resolve(this.chats);
+      chrome.storage.local.set({ chats: data ? data : [] }, () => {
+        console.info('[WhatSlackCore]       Persisted:', { chats: data });
+        resolve(data);
       });
     });
   }
 
   clearChats() {
-    return this.saveChats([]);
+    return this.persistChats([]);
   }
 
   fetchContacts() {
@@ -131,20 +125,18 @@ export default class WhatSlackCore {
     });
   }
 
-  saveContacts(data) {
-    console.info('[WhatSlackCore]       saveContacts');
+  persistContacts(data) {
+    console.info('[WhatSlackCore]       persistContacts');
     return new Promise(resolve => {
-      chrome.storage.local.set({ contacts: data ? data : this.contacts }, () => {
-        if(data)
-          this.contacts = data;
-        console.info('[WhatSlackCore]       Saved:', { contacts: this.contacts });
-        resolve(this.contacts);
+      chrome.storage.local.set({ contacts: data ? data : [] }, () => {
+        console.info('[WhatSlackCore]       Persisted:', { contacts: data });
+        resolve(data);
       });
     });
   }
 
   clearContacts() {
-    return this.saveContacts([]);
+    return this.persistContacts([]);
   }
 
   fetchChannels() {

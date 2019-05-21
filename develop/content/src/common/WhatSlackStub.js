@@ -51,15 +51,13 @@ export default class WhatSlackStub {
     });
   }
 
-  savePrefs(data) {
-    console.info('[WhatSlackStub]       savePrefs');
+  persistPrefs(data) {
+    console.info('[WhatSlackStub]       persistPrefs');
     return new Promise((resolve, reject) => {
       try{
-        data = data ? data : this.prefs;
-        window.localStorage.setItem('prefs', JSON.stringify(data));
-        this.prefs = data;
-        console.info('[WhatSlackStub]       Saved:', { prefs: this.prefs });
-        resolve(this.prefs);
+        window.localStorage.setItem('prefs', JSON.stringify(data ? data : {}));
+        console.info('[WhatSlackStub]       Persisted:', { prefs: data });
+        resolve(data);
       } catch(err){
         reject(err);
       }
@@ -78,15 +76,13 @@ export default class WhatSlackStub {
     });
   }
 
-  saveForwards(data) {
-    console.info('[WhatSlackStub]       saveForwards');
+  persistForwards(data) {
+    console.info('[WhatSlackStub]       persistForwards');
     return new Promise((resolve, reject) => {
       try{
-        data = data ? data : this.forwards;
-        window.localStorage.setItem('forwards', JSON.stringify(data));
-        this.forwards = data;
-        console.info('[WhatSlackStub]       Saved:', { forwards: this.forwards });
-        resolve(this.forwards);
+        window.localStorage.setItem('forwards', JSON.stringify(data ? data : []));
+        console.info('[WhatSlackStub]       Persisted:', { forwards: data });
+        resolve(data);
       } catch(err){
         reject(err);
       }
@@ -94,7 +90,7 @@ export default class WhatSlackStub {
   }
 
   clearForwards() {
-    return this.saveForwards([]);
+    return this.persistForwards([]);
   }
 
   fetchChats() {
@@ -109,15 +105,13 @@ export default class WhatSlackStub {
     });
   }
 
-  saveChats(data) {
-    console.info('[WhatSlackStub]       saveChats');
+  persistChats(data) {
+    console.info('[WhatSlackStub]       persistChats');
     return new Promise((resolve, reject) => {
       try{
-        data = data ? data : this.chats;
-        window.localStorage.setItem('chats', JSON.stringify(data));
-        this.chats = data;
-        console.info('[WhatSlackStub]       Saved:', { chats: this.chats });
-        resolve(this.chats);
+        window.localStorage.setItem('chats', JSON.stringify(data ? data : []));
+        console.info('[WhatSlackStub]       Persisted:', { chats: data });
+        resolve(data);
       } catch(err){
         reject(err);
       }
@@ -125,7 +119,7 @@ export default class WhatSlackStub {
   }
 
   clearChats() {
-    return this.saveChats([]);
+    return this.persistChats([]);
   }
 
   fetchContacts() {
@@ -140,15 +134,13 @@ export default class WhatSlackStub {
     });
   }
 
-  saveContacts(data) {
-    console.info('[WhatSlackStub]       saveContacts');
+  persistContacts(data) {
+    console.info('[WhatSlackStub]       persistContacts');
     return new Promise((resolve, reject) => {
       try{
-        data = data ? data : this.contacts;
-        window.localStorage.setItem('contacts', JSON.stringify(data));
-        this.contacts = data;
-        console.info('[WhatSlackStub]       Saved:', { contacts: this.contacts });
-        resolve(this.contacts);
+        window.localStorage.setItem('contacts', JSON.stringify(data ? data : []));
+        console.info('[WhatSlackStub]       Persisted:', { contacts: data });
+        resolve(data);
       } catch(err){
         reject(err);
       }
@@ -156,7 +148,7 @@ export default class WhatSlackStub {
   }
 
   clearContacts() {
-    return this.saveContacts([]);
+    return this.persistContacts([]);
   }
 
   fetchChannels() {

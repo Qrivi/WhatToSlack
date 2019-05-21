@@ -83,9 +83,9 @@ export const store = new Vuex.Store({
     async FETCH_CHANNELS({ state, commit }) {
       try {
         commit('CHANNELS', await core.fetchChannels());
-        commit('ERRORS', { ...state.errors, contacts: false });
+        commit('ERRORS', { ...state.errors, channels: false });
       } catch (err) {
-        commit('ERRORS', { ...state.errors, contacts: err });
+        commit('ERRORS', { ...state.errors, channels: err });
       }
     }
   }

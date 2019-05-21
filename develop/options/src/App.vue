@@ -8,9 +8,6 @@
 </template>
 
 <script>
-import WhatSlackCore from '../../content/src/common/WhatSlackCore';
-import WhatSlackStub from '../../content/src/common/WhatSlackStub';
-
 import AppMessage from './segments/AppMessage.vue';
 import AppFooter from './segments/AppFooter.vue';
 import SectionAuthentication from './segments/SectionAuthentication.vue';
@@ -23,10 +20,6 @@ export default {
     AppFooter,
     SectionAuthentication,
     SectionForwarding
-  },
-  created() {
-    const core = chrome.storage ? new WhatSlackCore() : new WhatSlackStub();
-    this.$store.commit('SET_CORE', core);
   }
 };
 </script>
